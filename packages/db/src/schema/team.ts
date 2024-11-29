@@ -7,9 +7,6 @@ export const team = sqliteTable("team", {
   id: id(),
   slug: text("slug").notNull(),
   name: text("name").notNull(),
-  type: text("type", {
-    enum: ["free", "pro", "enterprise"],
-  }).default("free"),
   description: text("description"),
   image: text("image"),
   createdAt: date("createdAt"),

@@ -1,6 +1,5 @@
 import type { AdapterAccount } from "@auth/core/adapters";
 import {
-  int,
   integer,
   primaryKey,
   sqliteTable,
@@ -15,9 +14,6 @@ export const users = sqliteTable("user", {
   email: text("email").notNull(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
-  plan: text("plan").default("free"),
-  stripeId: text("stripeId"),
-  billingCycleStart: int("billingCycleStart"),
   createdAt: date("createdAt"),
 });
 
