@@ -1,5 +1,3 @@
-import { PricingCard } from "@/components/pricing-card";
-import { SuccessfulPayment } from "@/components/successful-payment";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
@@ -11,13 +9,11 @@ import {
 } from "@/components/billing-tab";
 import { db } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
-import { PLANS } from "@/lib/stripe/plans";
 import { nCommaFormat } from "@/lib/utils";
-import { getUsage, mangePayment } from "@/server/actions/billing";
+import { getUsage } from "@/server/actions/billing";
 import { Eye, Layout, MousePointerClick } from "lucide-react";
 import { getTeams } from "@/server/query";
 import { UsageCard } from "@/components/usage-card";
-import { getLimit } from "@/lib/limits";
 
 const Setting = async ({ params }: { params: { slug: string[] } }) => {
   const user = await getCurrentUser();
@@ -37,7 +33,8 @@ const Setting = async ({ params }: { params: { slug: string[] } }) => {
   const lastMonth = new Date();
   const thisMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
-  const { plan, ...usage } = await getUsage(lastMonth, thisMonth, user.id);
+  const { ...usage } = await getUsage(lastMonth, thisMonth, user.id);
+
   function getMonthName(date: Date): string {
     const monthNames: string[] = [
       "Jan",
@@ -58,11 +55,6 @@ const Setting = async ({ params }: { params: { slug: string[] } }) => {
     return monthNames[monthIndex];
   }
 
-  const planLimitTeam = getLimit(userWithBillingInfo?.plan);
-
-  const portalUrl = userWithBillingInfo?.stripeId
-    ? await mangePayment(userWithBillingInfo.stripeId)
-    : "";
   return (
     <section className=" space-y-8">
       <div className="grid gap-1">
@@ -81,68 +73,25 @@ const Setting = async ({ params }: { params: { slug: string[] } }) => {
         <TabsContent value="billing" className="flex flex-col max-w-[76rem] ">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-7">
             <UsageCard
-              title="Websites"
-              value={`${usage.websites}/${plan?.quota.websites}`}
-              description={`${
-                (plan.quota.websites as number) - usage.websites
-              } left`}
+              title="sssWebsites"
+              value={`${usage.websites}`}
               icon="layout"
             />
             <UsageCard
               title="Custom Events"
-              value={`${nCommaFormat(usage.customEvents)}/${nCommaFormat(
-                plan?.quota.customEvents
-              )}`}
-              description={`${nCommaFormat(
-                (plan.quota.pageViews as number) - (usage.pageViews as number)
-              )} left`}
+              value={`${nCommaFormat(usage.customEvents)}`}
               icon="events"
             />
             <UsageCard
               title="Page View"
-              value={`${nCommaFormat(usage.pageViews)}/${nCommaFormat(
-                plan?.quota.pageViews
-              )}`}
-              description={`${nCommaFormat(
-                (plan.quota.pageViews as number) - (usage.pageViews as number)
-              )} left`}
+              value={`${nCommaFormat(usage.pageViews)}`}
               icon="mousePointerClick"
             />
             <UsageCard
               title="Teams"
               value={`${teams.length}`}
-              description={`${
-                userWithBillingInfo?.plan === "free"
-                  ? `${planLimitTeam - teams.length} left`
-                  : "Teams Created So Far"
-              } `}
+              description="Teams Created So Far"
               icon="users"
-            />
-          </div>
-          <div className=" mt-6 flex-col md:flex-row flex justify-start items-start gap-8 pb-4">
-            <PricingCard
-              tier={PLANS[0]}
-              user={{
-                ...user,
-                portalUrl,
-              }}
-              currentPlan={userWithBillingInfo?.plan === PLANS[0].slug}
-            />
-            <PricingCard
-              tier={PLANS[1]}
-              user={{
-                ...user,
-                portalUrl,
-              }}
-              currentPlan={userWithBillingInfo?.plan === PLANS[1].slug}
-            />
-            <PricingCard
-              tier={PLANS[2]}
-              user={{
-                ...user,
-                portalUrl,
-              }}
-              currentPlan={userWithBillingInfo?.plan === PLANS[2].slug}
             />
           </div>
         </TabsContent>
@@ -161,18 +110,8 @@ const Setting = async ({ params }: { params: { slug: string[] } }) => {
                   <Layout size={14} />
                   <p className=" font-bold text-stone-300">Websites</p>
                 </div>
-                <p className=" text-sm mt-2">
-                  {usage.websites}/{plan?.quota.websites}
-                </p>
-                <Progress
-                  value={
-                    (usage.websites / (plan.quota.websites as number)) * 100
-                  }
-                  className=" h-2 mt-2"
-                />
-                <p className=" text-xs mt-2 text-ston-400">
-                  {(plan.quota.websites as number) - usage.websites} left
-                </p>
+                <p className=" text-sm mt-2">{usage.websites}</p>
+                <Progress value={usage.websites * 100} className=" h-2 mt-2" />
               </div>
               <div className=" flex-grow">
                 <div className=" flex items-center gap-2">
@@ -181,25 +120,9 @@ const Setting = async ({ params }: { params: { slug: string[] } }) => {
                 </div>
 
                 <p className=" text-sm mt-2">
-                  {`${nCommaFormat(usage.pageViews)}/${nCommaFormat(
-                    plan?.quota.pageViews
-                  )}`}
+                  {`${nCommaFormat(usage.pageViews)}`}
                 </p>
-                <Progress
-                  value={
-                    ((usage.pageViews as number) /
-                      (plan.quota.pageViews as number)) *
-                    100
-                  }
-                  className="h-2 mt-2"
-                />
-                <p className=" text-xs mt-2 text-ston-400">
-                  {nCommaFormat(
-                    (plan.quota.pageViews as number) -
-                      (usage.pageViews as number)
-                  )}{" "}
-                  left
-                </p>
+                <Progress value={usage.pageViews * 100} className="h-2 mt-2" />
               </div>
               <div className=" flex-grow">
                 <div className=" flex items-center gap-2">
@@ -208,32 +131,20 @@ const Setting = async ({ params }: { params: { slug: string[] } }) => {
                 </div>
 
                 <p className=" text-sm mt-2">
-                  {`${nCommaFormat(usage.customEvents)}/${nCommaFormat(
-                    plan?.quota.customEvents
-                  )}`}
+                  {`${nCommaFormat(usage.customEvents)}`}
                 </p>
                 <Progress
-                  value={
-                    ((usage.customEvents as number) /
-                      (plan.quota.customEvents as number)) *
-                    100
-                  }
+                  value={usage.customEvents * 100}
                   className=" h-2 mt-2"
                 />
                 <p className=" text-xs mt-2 text-ston-400">
-                  {nCommaFormat(
-                    (plan.quota.customEvents as number) -
-                      (usage.customEvents as number)
-                  )}{" "}
-                  left
+                  {nCommaFormat(usage.customEvents)} left
                 </p>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
       </TabModified>
-
-      <SuccessfulPayment />
     </section>
   );
 };
