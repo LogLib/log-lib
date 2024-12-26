@@ -1,41 +1,41 @@
 {
-  "version": "5",
-  "dialect": "sqlite",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "5",
-      "when": 1693423562807,
-      "tag": "0000_mean_forgotten_one",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1693598987897,
-      "tag": "0001_fearless_retro_girl",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1694807953642,
-      "tag": "0002_superb_tony_stark",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1700430409405,
-      "tag": "0003_legal_mandroid",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1732919899763,
-      "tag": "0004_cloudy_la_nuit",
-      "breakpoints": true
-    }
-  ]
+    "version": "5",
+    "dialect": "sqlite",
+    "entries": [
+        {
+            "idx": 0,
+            "version": "5",
+            "when": 1693423562807,
+            "tag": "0000_mean_forgotten_one",
+            "breakpoints": true
+        },
+        {
+            "idx": 1,
+            "version": "5",
+            "when": 1693598987897,
+            "tag": "0001_fearless_retro_girl",
+            "breakpoints": true
+        },
+        {
+            "idx": 2,
+            "version": "5",
+            "when": 1694807953642,
+            "tag": "0002_superb_tony_stark",
+            "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "5",
+            "when": 1700430409405,
+            "tag": "0003_legal_mandroid",
+            "breakpoints": true
+        },
+        {
+            "idx": 4,
+            "version": "5",
+            "when": 1732919899763,
+            "tag": "0004_cloudy_la_nuit",
+            "breakpoints": true
+        }
+    ]
 }

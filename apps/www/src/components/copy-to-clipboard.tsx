@@ -13,12 +13,7 @@ async function copyToClipboardWithMeta(value: string, _meta?: Record<string, unk
     navigator.clipboard.writeText(value);
 }
 
-export const CopyToClipboard = ({
-    text,
-    src,
-    className,
-    ...props
-}: CopyButtonProps) => {
+export const CopyToClipboard = ({ text, src, className, ...props }: CopyButtonProps) => {
     const [hasCopied, setHasCopied] = useState(false);
 
     useEffect(() => {

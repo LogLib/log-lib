@@ -1,108 +1,100 @@
-import clsx from 'clsx';
+import clsx from "clsx";
 
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 interface SectionButtonProps {
-  title: string;
-  description?: string;
-  icon?: ReactNode;
-  active?: boolean;
-  onClick?: () => void;
-  BottomChildren?: () => JSX.Element
+    title: string;
+    description?: string;
+    icon?: ReactNode;
+    active?: boolean;
+    onClick?: () => void;
+    BottomChildren?: () => JSX.Element;
 }
 
-
-
 export function SectionButton({
-  title,
-  description = '',
-  icon = null,
-  active = false,
-  onClick = () => { },
-  BottomChildren
+    title,
+    description = "",
+    icon = null,
+    active = false,
+    onClick = () => {},
+    BottomChildren,
 }: SectionButtonProps) {
-  return (
-    <button
-      type="button"
-      className={clsx(
-        'flex flex-1 items-center gap-4 rounded-2xl border-2 bg-transparent px-4 py-4 text-left',
-        'dark: bg-transparent ',
-        active
-          ? ['border-accent-400', 'dark:border-orange-600']
-          : ['border-divider-light ', 'dark:border-divider-dark']
-      )}
-      onClick={onClick}
-    >
-      {icon && (
-        <span
-          className={clsx(
-            'hidden w-24 shrink-0 justify-center text-center text-7xl font-black',
-            'xl:flex',
-            active
-              ? ['text-accent-600', 'dark:border-orange-600']
-              : ['text-slate-400', 'dark:text-slate-600']
-          )}
-        >
-          {icon}
-        </span>
-      )}
-      <span className={clsx('flex-1')}>
-        <span
-          className={clsx(
-            'block font-bold',
-            active
-              ? ['text-accent-600', 'dark:text-accent-400']
-              : ['text-slate-700', 'dark:text-slate-200']
-          )}
-        >
-          {title}
-        </span>
-        {description && (
-          <span
+    return (
+        <button
+            type="button"
             className={clsx(
-              'mt-1 block text-sm text-slate-400',
-              'dark:text-slate-400'
+                "flex flex-1 items-center gap-4 rounded-2xl border-2 bg-transparent px-4 py-4 text-left",
+                "dark: bg-transparent ",
+                active
+                    ? ["border-accent-400", "dark:border-orange-600"]
+                    : ["border-divider-light ", "dark:border-divider-dark"],
             )}
-          >
-
-            {description}
-          </span>
-        )}
-        {
-          BottomChildren && <BottomChildren />
-        }
-      </span>
-    </button>
-  );
+            onClick={onClick}
+        >
+            {icon && (
+                <span
+                    className={clsx(
+                        "hidden w-24 shrink-0 justify-center text-center text-7xl font-black",
+                        "xl:flex",
+                        active
+                            ? ["text-accent-600", "dark:border-orange-600"]
+                            : ["text-slate-400", "dark:text-slate-600"],
+                    )}
+                >
+                    {icon}
+                </span>
+            )}
+            <span className={clsx("flex-1")}>
+                <span
+                    className={clsx(
+                        "block font-bold",
+                        active
+                            ? ["text-accent-600", "dark:text-accent-400"]
+                            : ["text-slate-700", "dark:text-slate-200"],
+                    )}
+                >
+                    {title}
+                </span>
+                {description && (
+                    <span
+                        className={clsx("mt-1 block text-sm text-slate-400", "dark:text-slate-400")}
+                    >
+                        {description}
+                    </span>
+                )}
+                {BottomChildren && <BottomChildren />}
+            </span>
+        </button>
+    );
 }
 
 export function SectionButtonSmall({
-  title,
-  icon = null,
-  active = false,
-  onClick = () => { },
-}: Omit<SectionButtonProps, 'description'>) {
-  return (
-    <button
-      type="button"
-      className={clsx('flex flex-col items-center rounded-xl p-2 text-sm', [
-        active
-          ? ['text-accent-600', 'dark:text-accent-400']
-          : ['text-slate-400', 'dark:text-slate-600'],
-      ])}
-      onClick={onClick}
-    >
-      <span className={clsx('text-4xl font-black')}>{icon}</span>
-      <span
-        className={clsx(
-          'font-medium',
-          active
-            ? ['text-accent-600', 'dark:text-accent-400']
-            : ['text-slate-500', 'dark:text-slate-400']
-        )}
-      >
-        {title}
-      </span>
-    </button>
-  );
+    title,
+    icon = null,
+    active = false,
+    onClick = () => {},
+}: Omit<SectionButtonProps, "description">) {
+    return (
+        <button
+            type="button"
+            className={clsx("flex flex-col items-center rounded-xl p-2 text-sm", [
+                active
+                    ? ["text-accent-600", "dark:text-accent-400"]
+                    : ["text-slate-400", "dark:text-slate-600"],
+            ])}
+            onClick={onClick}
+        >
+            <span className={clsx("text-4xl font-black")}>{icon}</span>
+            <span
+                className={clsx(
+                    "font-medium",
+                    active
+                        ? ["text-accent-600", "dark:text-accent-400"]
+                        : ["text-slate-500", "dark:text-slate-400"],
+                )}
+            >
+                {title}
+            </span>
+        </button>
+    );
 }

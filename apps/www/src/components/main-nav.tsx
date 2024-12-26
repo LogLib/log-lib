@@ -11,52 +11,48 @@ import { cn } from "@/lib/utils";
 import { MainNavItem } from "types";
 
 interface MainNavProps {
-  items?: MainNavItem[];
-  children?: React.ReactNode;
+    items?: MainNavItem[];
+    children?: React.ReactNode;
 }
 
 export function MainNav({ items, children }: MainNavProps) {
-  const segment = useSelectedLayoutSegment();
-  const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false);
+    const segment = useSelectedLayoutSegment();
+    const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false);
 
-  return (
-    <div className="flex gap-6 md:gap-10">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Icons.logo />
-        <span className="hidden text-3xl font-bold sm:inline-block">
-          {siteConfig.name}
-        </span>
-      </Link>
-      {items?.length ? (
-        <nav className="hidden gap-6 md:flex">
-          {items?.map((item, index) => (
-            <Link
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-              key={index}
-              href={item.disabled ? "#" : item.href}
-              className={cn(
-                "hover:text-foreground/80 flex items-center text-lg font-medium transition-colors sm:text-sm",
-                item.href.startsWith(`/${segment}`)
-                  ? "text-foreground"
-                  : "text-foreground/60",
-                item.disabled && "cursor-not-allowed opacity-80"
-              )}
-            >
-              {item.title}
+    return (
+        <div className="flex gap-6 md:gap-10">
+            <Link href="/" className="hidden items-center space-x-2 md:flex">
+                <Icons.logo />
+                <span className="hidden text-3xl font-bold sm:inline-block">{siteConfig.name}</span>
             </Link>
-          ))}
-        </nav>
-      ) : null}
-      <button
-        className="flex items-center space-x-2 md:hidden"
-        onClick={() => setShowMobileMenu(!showMobileMenu)}
-      >
-        {showMobileMenu ? <Icons.close /> : <Icons.nav />}
-        <span className="font-bold">Menu</span>
-      </button>
-      {showMobileMenu && items && (
-        <MobileNav items={items}>{children}</MobileNav>
-      )}
-    </div>
-  );
+            {items?.length ? (
+                <nav className="hidden gap-6 md:flex">
+                    {items?.map((item, index) => (
+                        <Link
+                            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                            key={index}
+                            href={item.disabled ? "#" : item.href}
+                            className={cn(
+                                "hover:text-foreground/80 flex items-center text-lg font-medium transition-colors sm:text-sm",
+                                item.href.startsWith(`/${segment}`)
+                                    ? "text-foreground"
+                                    : "text-foreground/60",
+                                item.disabled && "cursor-not-allowed opacity-80",
+                            )}
+                        >
+                            {item.title}
+                        </Link>
+                    ))}
+                </nav>
+            ) : null}
+            <button
+                className="flex items-center space-x-2 md:hidden"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+            >
+                {showMobileMenu ? <Icons.close /> : <Icons.nav />}
+                <span className="font-bold">Menu</span>
+            </button>
+            {showMobileMenu && items && <MobileNav items={items}>{children}</MobileNav>}
+        </div>
+    );
 }

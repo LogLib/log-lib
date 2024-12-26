@@ -24,6 +24,6 @@ export const env = createEnv({
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         CLIENT_IP_ADDRESS: process.env.CLIENT_IP_ADDRESS,
         RESEND_EMAIL_SECRET: process.env.RESEND_EMAIL_SECRET,
-        NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL
+        NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     },
 });

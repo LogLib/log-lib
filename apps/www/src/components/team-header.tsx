@@ -98,8 +98,7 @@ export const TeamHeader = ({ teams }: Props) => {
                             >
                                 <Icons.layout className="h-4 w-4 " />
                                 <span className="">
-                                    {selectedTeam?.websites.length ? "Change" : "Add"} Team
-                                    Website
+                                    {selectedTeam?.websites.length ? "Change" : "Add"} Team Website
                                 </span>
                             </button>
                         )}

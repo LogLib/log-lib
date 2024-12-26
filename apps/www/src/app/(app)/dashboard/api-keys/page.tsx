@@ -31,18 +31,19 @@ const apiKeys = async () => {
     const keys = await db.query.apiKey
         .findMany({
             where(fields, operators) {
-                return operators.eq(fields.userId, user.id)
+                return operators.eq(fields.userId, user.id);
             },
         })
         .then((res) => {
             return res.map((key) => ({
                 ...key,
-                token: key.token.slice(0, 5) + "*".repeat(key.token.length - 7) + key.token.slice(-2),
+                token:
+                    key.token.slice(0, 5) + "*".repeat(key.token.length - 7) + key.token.slice(-2),
             }));
         });
     const websites = await db.query.website.findMany({
         where(fields, operators) {
-            return operators.eq(fields.userId, user.id)
+            return operators.eq(fields.userId, user.id);
         },
     });
     return (
@@ -75,7 +76,9 @@ const apiKeys = async () => {
                                     <TableCell className=" ll-ctc flex items-center">
                                         <div className="ll-ctc">{key.token}</div>
                                     </TableCell>
-                                    <TableCell>{formatDistanceToNow(key.expiresAt ?? new Date())}</TableCell>
+                                    <TableCell>
+                                        {formatDistanceToNow(key.expiresAt ?? new Date())}
+                                    </TableCell>
                                     <TableCell className=" flex cursor-pointer justify-end">
                                         <DeleteKeys id={key.id} />
                                     </TableCell>

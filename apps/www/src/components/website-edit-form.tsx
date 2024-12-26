@@ -86,7 +86,7 @@ export const EditWebsiteForm = ({
             title: "",
             url: "",
             public: true,
-        }
+        },
     });
     useEffect(() => {
         if (data) {
@@ -98,7 +98,6 @@ export const EditWebsiteForm = ({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [data]);
-
 
     return (
         <AnimatePresence>

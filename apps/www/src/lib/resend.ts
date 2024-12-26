@@ -2,7 +2,7 @@ import { env } from "env.mjs";
 import { JSXElementConstructor, ReactElement } from "react";
 import { Resend } from "resend";
 
-export const resend = env.RESEND_EMAIL_SECRET ? new Resend(env.RESEND_EMAIL_SECRET) : null
+export const resend = env.RESEND_EMAIL_SECRET ? new Resend(env.RESEND_EMAIL_SECRET) : null;
 
 export const sendEmail = async ({
     email,
@@ -24,9 +24,7 @@ export const sendEmail = async ({
         return Promise.resolve();
     }
     return resend.emails.send({
-        from: marketing
-            ? "Beka from Loglib <bekacru@loglib.io>"
-            : "Loglib <no-reply@loglib.io>",
+        from: marketing ? "Beka from Loglib <bekacru@loglib.io>" : "Loglib <no-reply@loglib.io>",
         to: test ? "delivered@resend.dev" : email,
         subject,
         react,

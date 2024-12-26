@@ -7,7 +7,9 @@ import { DeleteWebsiteAlert } from "./website-delete-alert";
 import { EditWebsiteForm } from "./website-edit-form";
 import { Website as WebsiteType } from "@loglib/types/models";
 
-export const WebsitesList = ({ websites }: { websites: (WebsiteType & { visitors: number })[] }) => {
+export const WebsitesList = ({
+    websites,
+}: { websites: (WebsiteType & { visitors: number })[] }) => {
     const [selected, setSelected] = useState<string>("");
     const [selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(undefined);
     const [isOpen, setIsOpen] = useState(false);

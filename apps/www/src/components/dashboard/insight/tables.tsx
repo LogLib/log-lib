@@ -94,10 +94,11 @@ export const InsightTables = ({
                                         <a
                                             href={
                                                 websiteUrl
-                                                    ? `${websiteUrl.endsWith("/")
-                                                        ? websiteUrl
-                                                        : `${websiteUrl}/`
-                                                    }${d.page}`
+                                                    ? `${
+                                                          websiteUrl.endsWith("/")
+                                                              ? websiteUrl
+                                                              : `${websiteUrl}/`
+                                                      }${d.page}`
                                                     : d.page
                                             }
                                             className=" hover:underline"
@@ -218,7 +219,7 @@ export const InsightTables = ({
                                                 }
                                             >
                                                 {location.location === "Unknown" ||
-                                                    !location.location ? (
+                                                !location.location ? (
                                                     <>
                                                         <Link2Icon />
                                                         Unknown
@@ -251,7 +252,9 @@ export const InsightTables = ({
                 {/* Referrer */}
                 <TabsContent value="ref" className=" bg-stone-950">
                     <CardContent className=" bg-stone-950">
-                        {isFilterActive("referrerDomain") || isFilterActive("utmCampaign") || isFilterActive("utmSource") ? (
+                        {isFilterActive("referrerDomain") ||
+                        isFilterActive("utmCampaign") ||
+                        isFilterActive("utmSource") ? (
                             <ClearFilter
                                 onClick={() => {
                                     clearFilter("referrerDomain");
@@ -310,7 +313,7 @@ export const InsightTables = ({
                                                     {refs.referrer.split(".").length > 1
                                                         ? refs.referrer
                                                         : refs.referrer.charAt(0).toUpperCase() +
-                                                        refs.referrer.slice(1)}
+                                                          refs.referrer.slice(1)}
                                                 </Link>
                                             </TableCell>
                                             <TableCell className="text-right">
@@ -414,8 +417,8 @@ export const InsightTables = ({
                     <CardContent className=" bg-stone-950/30">
                         <Tabs className=" w-full" defaultValue="general">
                             {isFilterActive("device") ||
-                                isFilterActive("os") ||
-                                isFilterActive("browser") ? (
+                            isFilterActive("os") ||
+                            isFilterActive("browser") ? (
                                 <ClearFilter
                                     onClick={() => {
                                         clearFilter("device");
@@ -450,7 +453,6 @@ export const InsightTables = ({
                                                         key: "device",
                                                         value: d.device,
                                                         operator: "is",
-
                                                     })
                                                 }
                                             >
@@ -483,7 +485,6 @@ export const InsightTables = ({
                                                         key: "device",
                                                         value: d.os,
                                                         operator: "is",
-
                                                     })
                                                 }
                                             >
@@ -515,7 +516,6 @@ export const InsightTables = ({
                                                         key: "device",
                                                         value: d.browser,
                                                         operator: "is",
-
                                                     })
                                                 }
                                             >

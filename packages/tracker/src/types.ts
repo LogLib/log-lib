@@ -1,4 +1,4 @@
-import { VitalData } from '@loglib/types/tracker';
+import { VitalData } from "@loglib/types/tracker";
 
 export type Config = {
     /** The ID of the tracker instance */
@@ -51,7 +51,7 @@ export interface Internal {
     sessionId: string;
     intervals: NodeJS.Timer[];
     sdkVersion: string;
-    vitalQueue: Set<VitalData>
+    vitalQueue: Set<VitalData>;
 }
 
 export interface InitInfo {

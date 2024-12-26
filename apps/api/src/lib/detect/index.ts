@@ -17,5 +17,5 @@ export async function detect(req: ApiRequest, screenWidth: number) {
         browser,
         city,
         country,
-    }
+    };
 }

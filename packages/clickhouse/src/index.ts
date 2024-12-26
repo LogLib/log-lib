@@ -1,1 +1,1 @@
-export { default as kafka } from "./kafka"
+export { default as kafka } from "./kafka";

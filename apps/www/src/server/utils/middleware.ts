@@ -25,13 +25,11 @@ export const protectedAction = async <T>(
 export const checkRole = async (user: User, teamId: string, role: ROLE[]) => {
     const teamUser = await db.query.teamMember.findFirst({
         where(fields, operators) {
-            return (
-                operators.and(
-                    operators.eq(fields.userId, user.id),
-                    operators.eq(fields.teamId, teamId),
-                    inArray(fields.role, role)
-                )
-            )
+            return operators.and(
+                operators.eq(fields.userId, user.id),
+                operators.eq(fields.teamId, teamId),
+                inArray(fields.role, role),
+            );
         },
     });
     return teamUser;

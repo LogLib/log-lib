@@ -8,6 +8,6 @@ export default defineConfig((opts) => {
         sourcemap: true,
         dts: true,
         format: ["esm"],
-        splitting: true
+        splitting: true,
     };
 });

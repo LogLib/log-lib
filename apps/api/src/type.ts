@@ -32,7 +32,7 @@ export type LoglibEvent = {
     duration: number;
     os: string;
     visitorId: string;
-    websiteId: string
+    websiteId: string;
 };
 
 export type LoglibTrackerEvent = {
@@ -47,7 +47,6 @@ export type LoglibTrackerEvent = {
     visitorId: string;
     sdkVersion: string;
 };
-
 
 export type EventRes = {
     id: string;

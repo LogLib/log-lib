@@ -42,7 +42,7 @@ import { TeamLeaveAlert } from "./team-leave-alert";
 import { TeamWebsiteModal } from "./team-website";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { toast } from "./ui/use-toast";
-import { TeamMember } from '@loglib/types/models';
+import { TeamMember } from "@loglib/types/models";
 
 export const columns: ColumnDef<TeamMember>[] = [
     {

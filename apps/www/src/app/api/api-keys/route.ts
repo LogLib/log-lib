@@ -16,11 +16,13 @@ export const POST = async (req: Request) => {
         //         userId: user.id,
         //     },
         // });
-        const currentKeysCount = await db.query.apiKey.findMany({
-            where(fields, operators) {
-                return operators.eq(fields.userId, user.id)
-            },
-        }).then(res => res.length)
+        const currentKeysCount = await db.query.apiKey
+            .findMany({
+                where(fields, operators) {
+                    return operators.eq(fields.userId, user.id);
+                },
+            })
+            .then((res) => res.length);
 
         if (currentKeysCount >= 5)
             return new Response(
@@ -39,7 +41,7 @@ export const POST = async (req: Request) => {
             websiteId: data.website,
             token: key,
             createdAt: new Date(),
-        })
+        });
         return new Response(
             JSON.stringify({
                 key,

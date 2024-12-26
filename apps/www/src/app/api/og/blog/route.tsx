@@ -1,6 +1,6 @@
 import { formatDate } from "@/lib/utils";
 import { allChangelogPosts } from "contentlayer/generated";
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
@@ -53,9 +53,7 @@ export async function GET(_: Request) {
                 >
                     Blog
                 </h1>
-                <p tw="text-lg text-stone-200">
-                    Latest news, guides and updates from Loglib.
-                </p>
+                <p tw="text-lg text-stone-200">Latest news, guides and updates from Loglib.</p>
             </div>
             <div tw="flex w-full pt-10 pl-28">
                 <p tw="text-gray-200">{formatDate(post.publishedAt)}</p>

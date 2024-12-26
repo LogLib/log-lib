@@ -1,16 +1,16 @@
-import { Resend } from 'resend';
-import { ReactElement } from 'react';
-import IngestEmail from './emails/ingest-email';
-import React from "react"
-import { GetInsightResponse } from '@loglib/types';
+import { Resend } from "resend";
+import { ReactElement } from "react";
+import IngestEmail from "./emails/ingest-email";
+import React from "react";
+import { GetInsightResponse } from "@loglib/types";
 
 export class Emails {
     private readonly apiKey: string | undefined;
-    private readonly resend: Resend | undefined
+    private readonly resend: Resend | undefined;
     constructor(opts: { apiKey?: string }) {
         this.apiKey = opts.apiKey;
         if (this.apiKey) {
-            this.resend = new Resend(this.apiKey)
+            this.resend = new Resend(this.apiKey);
         }
     }
 
@@ -46,16 +46,23 @@ export class Emails {
     public sendIngestedEmail(opts: {
         to: string;
         website: {
-            title: string,
-            id: string
-        },
-        stats: GetInsightResponse["insight"]
-        topPages: GetInsightResponse['data']['pages']
+            title: string;
+            id: string;
+        };
+        stats: GetInsightResponse["insight"];
+        topPages: GetInsightResponse["data"]["pages"];
     }) {
         return this.sendEmail({
             email: opts.to,
             subject: `${opts.website.title} summary on loglib`,
-            react: <IngestEmail website={opts.website} stats={opts.stats} email={opts.to} topPages={opts.topPages} />
-        })
+            react: (
+                <IngestEmail
+                    website={opts.website}
+                    stats={opts.stats}
+                    email={opts.to}
+                    topPages={opts.topPages}
+                />
+            ),
+        });
     }
 }

@@ -26,15 +26,15 @@ export const DELETE = async (_: Request, context: z.infer<typeof apiKeysCtxSchem
             where(fields, operators) {
                 return operators.and(
                     operators.eq(fields.id, context.params.id),
-                    operators.eq(fields.userId, user.id)
-                )
+                    operators.eq(fields.userId, user.id),
+                );
             },
-        })
+        });
         if (!isUserOwned)
             return new Response(null, {
                 status: 401,
             });
-        await db.delete(schema.apiKey).where(eq(schema.apiKey.id, context.params.id))
+        await db.delete(schema.apiKey).where(eq(schema.apiKey.id, context.params.id));
     } catch {
         return new Response(null, {
             status: 500,

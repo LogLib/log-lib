@@ -47,13 +47,13 @@ function DataTable<TData, TValue>({
         pageSize: 40,
     });
 
-    const [localData, setLocalData] = useState(data)
+    const [localData, setLocalData] = useState(data);
 
     useEffect(() => {
         if (data) {
-            setLocalData(data)
+            setLocalData(data);
         }
-    }, [data])
+    }, [data]);
 
     const pagination = React.useMemo(
         () => ({
@@ -113,9 +113,9 @@ function DataTable<TData, TValue>({
                                             {header.isPlaceholder
                                                 ? null
                                                 : (flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext(),
-                                                ) as ReactNode)}
+                                                      header.column.columnDef.header,
+                                                      header.getContext(),
+                                                  ) as ReactNode)}
                                         </TableHead>
                                     );
                                 })}

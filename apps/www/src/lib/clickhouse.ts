@@ -16,8 +16,8 @@ export const getIsWebsiteActive = async ({ websiteId }: { websiteId: string }) =
 
 export const removeWebsiteData = async ({ websiteId }: { websiteId: string }) => {
     const res = await client.query({
-        query: `ALTER TABLE loglib.event DELETE WHERE websiteId = '${websiteId}'`
-    })
-    console.log(res)
-    return res
-}
+        query: `ALTER TABLE loglib.event DELETE WHERE websiteId = '${websiteId}'`,
+    });
+    console.log(res);
+    return res;
+};

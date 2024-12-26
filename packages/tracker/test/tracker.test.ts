@@ -173,7 +173,7 @@ describe("events", () => {
         button.click();
         expect(window.lli.eventsBank.length).toBe(1);
         vi.advanceTimersByTime(1000);
-        expect(sendEvents).toHaveBeenCalled()
+        expect(sendEvents).toHaveBeenCalled();
         document.body.removeChild(button);
     });
 });

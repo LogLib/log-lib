@@ -21,7 +21,7 @@ export async function cancelSubscription(customer?: string) {
             })
             .then((res) => res.data[0]?.id);
         if (!subscriptionId) {
-            throw Error("Empty Subscription Id")
+            throw Error("Empty Subscription Id");
         }
         return await stripe.subscriptions.update(subscriptionId, {
             cancel_at_period_end: true,

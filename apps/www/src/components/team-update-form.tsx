@@ -37,7 +37,7 @@ export const TeamUpdateForm = () => {
             setSelectedTeam({
                 ...team,
                 name: res.name,
-                websites: res.teamWebsites
+                websites: res.teamWebsites,
             });
             toast({
                 title: "Success!",
