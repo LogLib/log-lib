@@ -5,7 +5,6 @@ import { getCurrentUser } from "@/lib/session";
 import { queries } from "@/server/query/queries";
 import { getWebsite } from "@/server/query/website";
 import { schema } from "@loglib/db";
-import { PLAN } from "@loglib/types/models";
 import { eq } from "drizzle-orm";
 import { notFound, redirect } from "next/navigation";
 
@@ -21,25 +20,17 @@ export default async function Page({
   });
   const { teamWebsites } = await getWebsite();
   const website = await db.query.website.findFirst({
-    with: {
-      user: {
-        columns: {
-          plan: true,
-        },
-      },
-    },
     where: (r, q) => {
-      return q.or(
-        eq(r.id, params.website)
-      );
-    }
+      return q.or(eq(r.id, params.website));
+    },
   });
+
   if (!website) {
-    return notFound()
+    return notFound();
   }
 
-  const isTeamMember = !!teamWebsites.find(w => w.id === params.website);
-  const isAuthed = website.userId === user?.id || isTeamMember
+  const isTeamMember = !!teamWebsites.find((w) => w.id === params.website);
+  const isAuthed = website.userId === user?.id || isTeamMember;
 
   if (!isAuthed && !website.public) {
     return redirect("/");
@@ -49,8 +40,8 @@ export default async function Page({
   const showSetup = isPublic
     ? false
     : website.active
-      ? false
-      : await (async () => {
+    ? false
+    : await (async () => {
         const haveSession = (await queries.getIsWebsiteActive(params.website))
           .length;
         if (haveSession) {
@@ -69,7 +60,6 @@ export default async function Page({
       <Dashboard
         website={{
           ...website,
-          plan: website.user.plan as PLAN,
         }}
         isPublic={isPublic}
         showSetup={showSetup}
