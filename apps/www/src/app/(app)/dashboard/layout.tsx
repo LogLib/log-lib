@@ -28,6 +28,7 @@ export default async function DashboardSideBarLayout({
     const lastMonth = new Date()
     const thisMonth = new Date()
     lastMonth.setMonth(lastMonth.getMonth() - 1)
+    console.log('here')
     const usage = await getUsage(lastMonth, thisMonth, user.id)
     return (
         <div className=" space-y-8 px-4 md:px-16 bg-background">

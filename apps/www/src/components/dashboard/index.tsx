@@ -85,7 +85,7 @@ export const Dashboard = ({
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const [setting] = useAtom(localSettingAtom);
     const url = env.NEXT_PUBLIC_API_URL;
-    const { data, isLoading } = useSWR<GetInsightResponse>(
+    const { data, isLoading, error } = useSWR<GetInsightResponse>(
         `${url}?websiteId=${website.id
         }&startDate=${timeRange.startDate.toUTCString()}&endDate=${timeRange.endDate.toUTCString()}&timeZone=${setting.timezone ?? timezone
         }&filter=${JSON.stringify(filters)}&token=${token}`,

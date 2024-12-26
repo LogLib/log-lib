@@ -32,13 +32,23 @@ const getTotalEventsCount = async (websiteIds: string[], startDate: Date, endDat
     return {
         clickhouse: async () => {
             const sessionsCount = await client.query({
-                query: `select * from loglib.event where websiteId IN (${websiteIds.map(w => `'${w}'`)}) AND timestamp >='${startDate.toISOString().slice(0, 19).replace("T", " ")}' AND timestamp <='${endDate.toISOString().slice(0, 19).replace("T", " ")}'`,
+                query: `
+                    SELECT 
+                        COUNT(*) AS total,
+                        COUNTIf(event = 'hits') AS pageViews,
+                        COUNTIf(event != 'hits' AND event != 'vitals') AS customEvents
+                    FROM loglib.event
+                    WHERE websiteId IN (${websiteIds.map(w => `'${w}'`).join(", ")})
+                      AND timestamp >= '${startDate.toISOString().slice(0, 19).replace("T", " ")}'
+                      AND timestamp <= '${endDate.toISOString().slice(0, 19).replace("T", " ")}'
+                `,
                 format: "JSONEachRow"
-            }).then(async (res) => await res.json() as { event: string }[])
+            }).then(async (res) => await res.json() as { pageViews: number; customEvents: number }[]);
+
             return {
-                pageViews: sessionsCount.filter(s => s.event === "hits").length,
-                customEvents: sessionsCount.filter(s => s.event !== "hits" && s.event !== "vitals").length
-            }
+                pageViews: sessionsCount[0].pageViews,
+                customEvents: sessionsCount[0].customEvents
+            };
         },
         sqlite: async () => {
             //TODO: to be done
