@@ -9,11 +9,10 @@ const DemoPage = () => {
                 id: "loglib",
                 url: "https://loglib.io",
                 title: "Loglib",
-                plan: "plus",
                 userId: "",
                 createdAt: new Date(),
                 public: false,
-                active: true
+                active: true,
             }}
             showSetup={false}
             token={token}

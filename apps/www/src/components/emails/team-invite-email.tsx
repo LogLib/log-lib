@@ -93,4 +93,4 @@ const TeamInviteEmail = ({
     );
 };
 
-export default TeamInviteEmail
+export default TeamInviteEmail;

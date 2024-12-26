@@ -17,9 +17,9 @@ export const GET = async (_: Request) => {
         const { user } = session;
         const websites = await db.query.website.findMany({
             where(fields, operators) {
-                return operators.eq(fields.userId, user.id)
+                return operators.eq(fields.userId, user.id);
             },
-        })
+        });
         return new Response(JSON.stringify(websites));
     } catch {
         return new Response(null, { status: 500 });
@@ -29,7 +29,7 @@ export const GET = async (_: Request) => {
 export const POST = async (request: Request) => {
     try {
         const session = await getServerSession(authOptions);
-        console.log(session, "sessions")
+        console.log(session, "sessions");
         if (!session) {
             return new Response("Unauthorized", { status: 403 });
         }
@@ -43,13 +43,13 @@ export const POST = async (request: Request) => {
             userId: user.id,
             url: body.url,
             title: body.title,
-        })
+        });
         if (body.team) {
-            await db.delete(schema.teamWebsites).where(eq(schema.teamWebsites.teamId, body.team))
+            await db.delete(schema.teamWebsites).where(eq(schema.teamWebsites.teamId, body.team));
             await db.insert(schema.teamWebsites).values({
                 teamId: body.team,
                 websiteId: body.id,
-            })
+            });
         }
         return new Response(JSON.stringify(website), {
             status: 201,
@@ -58,7 +58,7 @@ export const POST = async (request: Request) => {
             },
         });
     } catch (e: any) {
-        console.log(e)
+        console.log(e);
         return new Response(null, {
             status: 500,
         });

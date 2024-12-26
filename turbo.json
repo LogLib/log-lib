@@ -22,13 +22,13 @@
             "outputs": [],
             "cache": true
         },
-        "deploy":{
+        "deploy": {
             "cache": false
         },
-        "migrate":{
+        "migrate": {
             "cache": false
         },
-        "generate":{
+        "generate": {
             "cache": false
         }
     }

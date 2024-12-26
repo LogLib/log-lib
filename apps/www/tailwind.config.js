@@ -5,7 +5,7 @@ module.exports = {
     content: ["./src/**/*.{ts,tsx}"],
     darkMode: ["class"],
     theme: {
-    container: {
+        container: {
             center: true,
             padding: "2rem",
             screens: {

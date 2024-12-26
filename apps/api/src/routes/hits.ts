@@ -11,19 +11,19 @@ import { setVisitorId } from "../lib/set-visitor-id";
 import { RouteType } from "./type";
 
 export const schema = z.object({
-  id: z.string(),
-  currentPath: z.string(),
-  referrerPath: z.string(),
-  duration: z.number(),
-  referrerDomain: z.string(),
-  queryParams: z.record(z.any()),
-  language: z.string(),
-  screenWidth: z.number(),
-  sessionId: z.string(),
-  visitorId: z.string(),
-  host: z.string(),
-  websiteId: z.string(),
-  sdkVersion: z.string(),
+    id: z.string(),
+    currentPath: z.string(),
+    referrerPath: z.string(),
+    duration: z.number(),
+    referrerDomain: z.string(),
+    queryParams: z.record(z.any()),
+    language: z.string(),
+    screenWidth: z.number(),
+    sessionId: z.string(),
+    visitorId: z.string(),
+    host: z.string(),
+    websiteId: z.string(),
+    sdkVersion: z.string(),
 });
 
 export type HitsRouteSchema = z.infer<typeof schema>;
@@ -34,85 +34,82 @@ export type HitsRouteSchema = z.infer<typeof schema>;
  */
 
 export const createHits: RouteType = async ({ req, rawBody }) => {
-  if (isbot(req.headers["user-agent"])) {
-    return { data: { message: "bot" }, status: 200 };
-  }
-  try {
-    const body = schema.safeParse(rawBody);
-    if (!body.success) {
-      return apiResponse.badRequest;
+    if (isbot(req.headers["user-agent"])) {
+        return { data: { message: "bot" }, status: 200 };
     }
-    const {
-      websiteId,
-      sessionId,
-      host,
-      id,
-      screenWidth,
-      language,
-      referrerDomain,
-      referrerPath,
-      currentPath,
-      queryParams,
-      duration,
-    } = body.data;
-    const usage = checkUsage(websiteId);
-    if (!usage) {
-      return;
+    try {
+        const body = schema.safeParse(rawBody);
+        if (!body.success) {
+            return apiResponse.badRequest;
+        }
+        const {
+            websiteId,
+            sessionId,
+            host,
+            id,
+            screenWidth,
+            language,
+            referrerDomain,
+            referrerPath,
+            currentPath,
+            queryParams,
+            duration,
+        } = body.data;
+        const usage = checkUsage(websiteId);
+        if (!usage) {
+            return;
+        }
+        const ref = !referrerDomain || referrerDomain.includes(host) ? "direct" : referrerDomain;
+        const ip = getIpAddress(req);
+        const { city, country } = await getLocation(ip, req);
+        const userAgent = (req.headers["user-agent"] as string) ?? "unknown";
+        const browser = browserName(userAgent) ?? "unknown";
+        const os = detectOS(userAgent) ?? "Mac OS";
+        const device = os ? getDevice(screenWidth, os) ?? "desktop" : "unknown";
+        const visitorId = setVisitorId(body.data.visitorId, ip);
+        const res = await eventDB.insertEvent({
+            id,
+            sessionId,
+            visitorId,
+            websiteId,
+            event: "hits",
+            timestamp: new Date().toISOString().slice(0, 19).replace("T", " "),
+            queryParams: queryParams ? JSON.stringify(queryParams) : "{}",
+            referrerDomain: ref,
+            country,
+            city,
+            language,
+            device,
+            os,
+            browser,
+            duration,
+            currentPath,
+            referrerPath,
+        });
+        return {
+            status: 200,
+            data: {
+                ...res,
+                country,
+                city,
+                referrerDomain,
+                referrerPath,
+                currentPath,
+                language,
+                screenWidth,
+                queryParams,
+                duration,
+                sessionId,
+                visitorId,
+            },
+        };
+    } catch (e) {
+        console.log(e, "error hits");
+        return {
+            status: 500,
+            data: {
+                message: "internal server error",
+            },
+        };
     }
-    const ref =
-      !referrerDomain || referrerDomain.includes(host)
-        ? "direct"
-        : referrerDomain;
-    const ip = getIpAddress(req);
-    const { city, country } = await getLocation(ip, req);
-    const userAgent = (req.headers["user-agent"] as string) ?? "unknown";
-    const browser = browserName(userAgent) ?? "unknown";
-    const os = detectOS(userAgent) ?? "Mac OS";
-    const device = os ? getDevice(screenWidth, os) ?? "desktop" : "unknown";
-    const visitorId = setVisitorId(body.data.visitorId, ip);
-    const res = await eventDB.insertEvent({
-      id,
-      sessionId,
-      visitorId,
-      websiteId,
-      event: "hits",
-      timestamp: new Date().toISOString().slice(0, 19).replace("T", " "),
-      queryParams: queryParams ? JSON.stringify(queryParams) : "{}",
-      referrerDomain: ref,
-      country,
-      city,
-      language,
-      device,
-      os,
-      browser,
-      duration,
-      currentPath,
-      referrerPath,
-    });
-    return {
-      status: 200,
-      data: {
-        ...res,
-        country,
-        city,
-        referrerDomain,
-        referrerPath,
-        currentPath,
-        language,
-        screenWidth,
-        queryParams,
-        duration,
-        sessionId,
-        visitorId,
-      },
-    };
-  } catch (e) {
-    console.log(e, "error hits");
-    return {
-      status: 500,
-      data: {
-        message: "internal server error",
-      },
-    };
-  }
 };

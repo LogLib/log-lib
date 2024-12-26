@@ -98,9 +98,13 @@ export default function Features() {
                         >
                             {featureList.map(({ key, title, icon, description, cta }) => (
                                 <AccordionItem key={key} value={key}>
-                                    <AccordionTrigger onClick={() => loglib.track("accordion change", {
-                                        feature: key
-                                    })}>
+                                    <AccordionTrigger
+                                        onClick={() =>
+                                            loglib.track("accordion change", {
+                                                feature: key,
+                                            })
+                                        }
+                                    >
                                         <div className="flex items-center space-x-3 p-3">
                                             {icon}
                                             <h3 className="text-base font-semibold text-stone-100">

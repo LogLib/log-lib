@@ -17,7 +17,7 @@ const stores = {
     userWebsites: userWebsitesAtom,
     user: userAtom,
     teams: teamsAtom,
-    usage: usageAtom
+    usage: usageAtom,
 };
 type Stores = typeof stores;
 
@@ -29,7 +29,7 @@ export function StoreSetter<T extends keyof Stores, K extends Stores[T]["init"]>
 
     useEffect(() => {
         // @ts-ignore //it give us what we want which is typing the input it's okay to ignore this for staying sane
-        setData(data)
-    }, [])
+        setData(data);
+    }, []);
     return null;
 }

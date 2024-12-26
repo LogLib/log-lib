@@ -11,13 +11,9 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/user-avatar";
-import { Badge } from "./ui/badge";
-import { cn } from "@/lib/utils";
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-    user: User & {
-        plan: string
-    }
+    user: User;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
@@ -39,12 +35,6 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
                             </p>
                         )}
                     </div>
-                    <Badge className={cn(" mt-2", user.plan !== "free" && "border border-amber-600")} style={{
-                        background: user.plan === "free" ? "white" : user.plan !== "pro" ? "#1b1917" : "#1b1917",
-                        color: user.plan === "free" ? "black" : "goldenrod"
-                    }}>
-                        {user.plan.charAt(0).toUpperCase() + user.plan.slice(1)}
-                    </Badge>
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild className=" cursor-pinter flex items-center gap-2">

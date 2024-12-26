@@ -54,7 +54,7 @@ export async function send(
     data: Record<string, any> | Array<Record<string, any>>,
     onSuccess?: () => void,
     onError?: () => void,
-    path?: string
+    path?: string,
 ) {
     const logger = Logger(window.llc.debug);
     const url = path ? window.llc.host + path : window.llc.host;

@@ -11,7 +11,7 @@ const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children, ...props }: DialogPrimitive.DialogPortalProps) => (
-    <DialogPrimitive.Portal  {...props}>
+    <DialogPrimitive.Portal {...props}>
         <div className="fixed inset-0 z-50 flex items-start justify-center sm:items-center">
             {children}
         </div>
@@ -99,6 +99,11 @@ const DialogDescription = React.forwardRef<
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 export {
-    Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
 };
-

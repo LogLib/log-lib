@@ -24,7 +24,7 @@ import { cn, fetcher } from "@/lib/utils";
 import { localSettingAtom } from "@/jotai/store";
 import { loglib } from "@loglib/tracker";
 import { TrackClick } from "@loglib/tracker/react";
-import { PLAN, Website } from "@loglib/types/models";
+import { Website } from "@loglib/types/models";
 import { env } from "env.mjs";
 import { useAtom } from "jotai";
 import { MoreHorizontal } from "lucide-react";
@@ -50,44 +50,45 @@ export const Dashboard = ({
     token,
     showSetup,
 }: {
-    website: Website & {
-        plan: PLAN
-    };
+    website: Website;
     isPublic: boolean;
     showSetup?: boolean;
     token: string;
 }) => {
-    const plan = website.plan
     const [timeRange, setTimeRange] = useState<TimeRange>({
         startDate: getLast24Hour(),
         endDate: new Date(),
         stringValue: "24hr",
     });
     const [customTime, setCustomTime] = useState(false);
-    const [rawFilters, setFilters] = useSearchParamsState('filters')
+    const [rawFilters, setFilters] = useSearchParamsState("filters");
 
     const filters = useMemo(() => {
-        if (typeof rawFilters === 'string') {
+        if (typeof rawFilters === "string") {
             try {
-                const parsedFilters = JSON.parse(rawFilters)
+                const parsedFilters = JSON.parse(rawFilters);
                 if (Array.isArray(parsedFilters)) {
-                    return parsedFilters as Filter[]
+                    return parsedFilters as Filter[];
                 }
             } catch (error) {
                 if (error instanceof SyntaxError) {
-                    console.error(`Filter string in search parameters is malformed. Found: ${rawFilters} `)
+                    console.error(
+                        `Filter string in search parameters is malformed. Found: ${rawFilters} `,
+                    );
                 }
             }
-            return []
+            return [];
         }
-        return []
-    }, [rawFilters])
+        return [];
+    }, [rawFilters]);
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const [setting] = useAtom(localSettingAtom);
     const url = env.NEXT_PUBLIC_API_URL;
     const { data, isLoading } = useSWR<GetInsightResponse>(
-        `${url}?websiteId=${website.id
-        }&startDate=${timeRange.startDate.toUTCString()}&endDate=${timeRange.endDate.toUTCString()}&timeZone=${setting.timezone ?? timezone
+        `${url}?websiteId=${
+            website.id
+        }&startDate=${timeRange.startDate.toUTCString()}&endDate=${timeRange.endDate.toUTCString()}&timeZone=${
+            setting.timezone ?? timezone
         }&filter=${JSON.stringify(filters)}&token=${token}`,
         fetcher,
     );
@@ -118,9 +119,9 @@ export const Dashboard = ({
             setIsBar(setting.graph === "bar-graph");
         }
     }, [setting]);
-    const router = useRouter()
-    const params = useSearchParams()
-    const defaultValue = params.get("tab") ?? "insights"
+    const router = useRouter();
+    const params = useSearchParams();
+    const defaultValue = params.get("tab") ?? "insights";
     return (
         <main>
             <AddTracker websiteId={website.id} show={showSetup ?? false} />
@@ -130,9 +131,13 @@ export const Dashboard = ({
                         "w-full space-y-4 transition-all duration-700 dark:text-white/80 scrollbar-hide",
                     )}
                 >
-                    <Tabs defaultValue={defaultValue} className="space-y-4" onValueChange={(val) => {
-                        router.push(`?tab=${val}`)
-                    }}>
+                    <Tabs
+                        defaultValue={defaultValue}
+                        className="space-y-4"
+                        onValueChange={(val) => {
+                            router.push(`?tab=${val}`);
+                        }}
+                    >
                         {!isPublic ? (
                             <div className=" flex items-center justify-between">
                                 <TabsList>
@@ -153,7 +158,10 @@ export const Dashboard = ({
                                     >
                                         Events
                                     </TabsTrigger>
-                                    <TabsTrigger value="speed" className="flex items-center gap-1 dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis">
+                                    <TabsTrigger
+                                        value="speed"
+                                        className="flex items-center gap-1 dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis"
+                                    >
                                         Speed
                                     </TabsTrigger>
                                 </TabsList>
@@ -184,7 +192,6 @@ export const Dashboard = ({
                                     setCustomTime={setCustomTime}
                                     timeRange={timeRange}
                                     customTime={customTime}
-                                    plan={plan}
                                 />
                             </div>
                             <div className=" flex flex-col items-end">
@@ -230,10 +237,10 @@ export const Dashboard = ({
                                                     ? viCardSwitch === "New Visitors"
                                                         ? data.insight.newVisitors
                                                         : viCardSwitch === "Unique Visitors"
-                                                            ? data.insight.uniqueVisitors
-                                                            : viCardSwitch === "Retaining Visitors"
-                                                                ? data.insight.returningVisitor
-                                                                : { change: 0, current: 0 }
+                                                        ? data.insight.uniqueVisitors
+                                                        : viCardSwitch === "Retaining Visitors"
+                                                        ? data.insight.returningVisitor
+                                                        : { change: 0, current: 0 }
                                                     : { change: 0, current: 0 }
                                             }
                                             isLoading={isLoading}
@@ -241,10 +248,10 @@ export const Dashboard = ({
                                                 viCardSwitch === "New Visitors"
                                                     ? "The number of people visiting your website for the first time."
                                                     : viCardSwitch === "Unique Visitors"
-                                                        ? "The total number of different people who visited your website."
-                                                        : viCardSwitch === "Retaining Visitors"
-                                                            ? "The number of visitors who returned to your website multiple times."
-                                                            : ""
+                                                    ? "The total number of different people who visited your website."
+                                                    : viCardSwitch === "Retaining Visitors"
+                                                    ? "The number of visitors who returned to your website multiple times."
+                                                    : ""
                                             }
                                             BottomChildren={() => (
                                                 <div className=" cursor-pointer z-10">
@@ -359,7 +366,7 @@ export const Dashboard = ({
                                                     <CardContent
                                                         className={cn(
                                                             curTableTab === "locations" &&
-                                                            "zoom-in-95",
+                                                                "zoom-in-95",
                                                         )}
                                                     >
                                                         <LocationMap
@@ -425,7 +432,7 @@ export const Dashboard = ({
                                                                     data={
                                                                         data
                                                                             ? data.graph
-                                                                                .uniqueVisitorsByDate
+                                                                                  .uniqueVisitorsByDate
                                                                             : []
                                                                     }
                                                                     name="Visitors"
@@ -442,7 +449,7 @@ export const Dashboard = ({
                                                                     data={
                                                                         data
                                                                             ? data.graph
-                                                                                .uniqueSessionByDate
+                                                                                  .uniqueSessionByDate
                                                                             : []
                                                                     }
                                                                     name="Sessions"
@@ -488,7 +495,7 @@ export const Dashboard = ({
                                         timeRange={timeRange}
                                         setting={{
                                             timezone: setting.timezone ?? timezone,
-                                            graph: setting.graph
+                                            graph: setting.graph,
                                         }}
                                         filters={filters}
                                         token={token}

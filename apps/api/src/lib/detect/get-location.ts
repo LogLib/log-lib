@@ -6,7 +6,7 @@ let lookup: Reader<CityResponse> | null;
 export async function getLocation(ip: string, req: ApiRequest) {
     //vercel
     if (req.headers["x-vercel-ip-country"]) {
-        console.log("vercel")
+        console.log("vercel");
         const country = req.headers["x-vercel-ip-country"] as string;
         const region = req.headers["x-vercel-ip-country-region"] as string;
         const city = req.headers["x-vercel-ip-city"] as string;
@@ -18,7 +18,7 @@ export async function getLocation(ip: string, req: ApiRequest) {
     }
     //cloudflare
     if (req.headers["cf-ipcountry"]) {
-        console.log("cf")
+        console.log("cf");
         const country = req.headers["cf-ipcountry"] as string;
         const city = req.headers["cf-ipcity"] as string;
         return {
@@ -26,7 +26,7 @@ export async function getLocation(ip: string, req: ApiRequest) {
             city: city,
         };
     }
-    console.log("maxmind")
+    console.log("maxmind");
     if (!ip) {
         return {
             country: "unknown",

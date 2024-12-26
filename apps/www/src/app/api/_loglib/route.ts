@@ -1,7 +1,7 @@
-import { env } from "env.mjs"
+import { env } from "env.mjs";
 
 export const POST = async (req: Request) => {
-    const headers = Object.fromEntries(req.headers)
+    const headers = Object.fromEntries(req.headers);
     const res = await fetch(env.NEXT_PUBLIC_API_URL, {
         body: await req.text(),
         method: "POST",
@@ -9,8 +9,8 @@ export const POST = async (req: Request) => {
             "Content-Type": "application/json",
             ...headers,
         },
-    }).then(async (res) => await res.json())
+    }).then(async (res) => await res.json());
     return new Response(JSON.stringify(res), {
         status: 200,
-    })
-}
+    });
+};

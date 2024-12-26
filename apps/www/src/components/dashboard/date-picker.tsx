@@ -21,7 +21,6 @@ import {
     getYesterday,
 } from "@/lib/time-helper";
 import { cn } from "@/lib/utils";
-import { PLAN } from "@loglib/types/models";
 import { format, subMonths } from "date-fns";
 import { CalendarDays } from "lucide-react";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -100,7 +99,6 @@ export const DatePicker = ({
     setCustomTime,
     timeRange,
     customTime,
-    plan
 }: {
     setTimeRange: React.Dispatch<
         React.SetStateAction<{
@@ -112,7 +110,6 @@ export const DatePicker = ({
     timeRange: { startDate: Date; endDate: Date; stringValue?: string };
     setCustomTime: (state: boolean) => void;
     customTime: boolean;
-    plan: PLAN
 }) => {
     function setTime(value: string) {
         setCustomTime(false);
@@ -196,15 +193,11 @@ export const DatePicker = ({
                     <SelectItem value="thisMonth">This Month</SelectItem>
                     <SelectItem value="last30">Last 30 Days</SelectItem>
                     <SelectItem value="last90">Last 90 Days</SelectItem>
-                    {
-                        plan !== "free" && <SelectItem value="thisYear">This Year</SelectItem>
-                    }
-                    {
-                        plan !== "plus" && <Fragment>
-                            <Separator className="my-2" />
-                            <SelectItem value="custom">Custom</SelectItem>
-                        </Fragment>
-                    }
+                    <SelectItem value="thisYear">This Year</SelectItem>
+                    <Fragment>
+                        <Separator className="my-2" />
+                        <SelectItem value="custom">Custom</SelectItem>
+                    </Fragment>
                 </SelectContent>
             </Select>
         </div>

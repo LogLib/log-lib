@@ -3,8 +3,6 @@ import Link from "next/link";
 import Background from "./grid-background/background";
 
 export const RepurposeYourData = () => {
-
-
     return (
         <section className=" w-full bg-stone-950 ">
             <Background />
@@ -12,7 +10,6 @@ export const RepurposeYourData = () => {
                 <div
                     className=" bg-[#303a75]  border-t border-stone-800 transition-all duration-500 w-full absolute bottom-0 blur-md"
                     id="border"
-
                 ></div>
                 <div className="max-w-screen-lg px-6 mx-auto grid md:grid-cols-2 gap-12">
                     <div className="flex flex-col items-center md:items-start text-center md:text-left order-2 md:order-none">

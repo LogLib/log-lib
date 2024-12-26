@@ -101,7 +101,7 @@ export const components = {
             {...props}
         />
     ),
-    pre:CodeBlock,
+    pre: CodeBlock,
     code: ({ className, ...props }) => {
         return (
             <div className=" flex items-center justify-between px-4">

@@ -16,7 +16,7 @@ export default function LoginPage() {
     const active = {
         github: !!env.GITHUB_CLIENT_ID,
         google: !!env.GOOGLE_CLIENT_ID,
-    }
+    };
     return (
         <div className="container  flex h-screen w-screen flex-col items-center justify-center">
             <Link

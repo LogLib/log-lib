@@ -105,7 +105,6 @@ export function Graph({
                                             <p className=" font-medium">{`${payload[0]?.value} ${name}`}</p>
                                         </div>
                                         <p className="text-gray-400 text-sm">{label}</p>
-                                        
                                     </div>
                                 );
                             }

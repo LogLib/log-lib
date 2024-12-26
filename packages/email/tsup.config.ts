@@ -7,5 +7,5 @@ export default defineConfig({
     sourcemap: true,
     splitting: true,
     clean: true,
-    external: ["react"]
-})
+    external: ["react"],
+});

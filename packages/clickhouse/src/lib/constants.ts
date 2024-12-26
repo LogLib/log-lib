@@ -1,2 +1,2 @@
-export const KAFKA_PRODUCER = 'kafka-producer';
-export const KAFKA = 'kafka';
+export const KAFKA_PRODUCER = "kafka-producer";
+export const KAFKA = "kafka";

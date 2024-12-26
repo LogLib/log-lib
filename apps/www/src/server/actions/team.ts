@@ -20,9 +20,9 @@ export async function createTeam(data: z.infer<typeof teamSchema>) {
             .values({
                 name: data.name,
                 slug: data.name.toLowerCase().replace(/\s/g, "-"),
-                type: "free",
             })
             .returning();
+
         const teamUser = await db
             .insert(schema.teamMember)
             .values({

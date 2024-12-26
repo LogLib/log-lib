@@ -45,8 +45,9 @@ const transformData = (events: LoglibEvent[], pastEvents: LoglibEvent[]) => {
         if (seconds < 60) {
             return isNaN(seconds) ? "0 sec" : `${seconds} sec`;
         } else {
-            return `${isNaN(minutes) ? 0 : minutes} min ${isNaN(remainingSeconds) ? 0 : remainingSeconds
-                } sec`;
+            return `${isNaN(minutes) ? 0 : minutes} min ${
+                isNaN(remainingSeconds) ? 0 : remainingSeconds
+            } sec`;
         }
     }
     return {

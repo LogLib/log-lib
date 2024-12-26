@@ -19,15 +19,15 @@ export type SidebarNavItem = {
     icon?: keyof typeof Icons;
     useInclude?: boolean;
 } & (
-        | {
-            href: string;
-            items?: never;
-        }
-        | {
-            href?: string;
-            items: NavLink[];
-        }
-    );
+    | {
+          href: string;
+          items?: never;
+      }
+    | {
+          href?: string;
+          items: NavLink[];
+      }
+);
 
 export type SiteConfig = {
     name: string;
