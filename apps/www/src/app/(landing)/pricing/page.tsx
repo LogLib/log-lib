@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { GithubIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -17,12 +18,13 @@ export default function page() {
         </p>
       </div>
       <div className=" flex-col md:flex-row flex items-center md:items-start justify-center space-y-2 md:space-y-0 md:gap-10 ">
-        <Button className="gap-2" variant="outline">
-          <GithubIcon size={15} />
-          Sponsor us on Github
-        </Button>
+        <Link href="https://github.com/sponsors/loglib">
+          <Button className="gap-2" variant="outline">
+            <GithubIcon size={15} />
+            Sponsor us on Github
+          </Button>
+        </Link>
       </div>
-      {/* </div> */}
     </div>
   );
 }
